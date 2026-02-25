@@ -2,6 +2,9 @@ const express = require("express");
 const dotenv = require("dotenv").config();
 const { specs, swaggerUi } = require("./swagger");
 const errorHandler = require("./middleware/errorHandler");
+const connectDb = require("./config/dbConnection");
+
+connectDb();
 const app = express();
 
 const port = process.env.PORT || 5000;
