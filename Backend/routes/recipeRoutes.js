@@ -13,7 +13,7 @@ const {
   getRecipe,
   updateRecipe,
   deleteRecipe,
-} = require("../controllers/contactController");
+} = require("../controllers/recipeController");
 
 /**
  * @swagger
@@ -40,6 +40,8 @@ const {
  *                 type: array
  *                 items:
  *                   type: string
+ *               cookingTime:
+ *                 type: integer
  *     responses:
  *       201:
  *         description: Recipe created
