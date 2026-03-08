@@ -4,7 +4,6 @@ const { constants } = require("../constants");
 
 //@description get all recipes
 //@route GET /api/recipes
-//@access public
 const getRecipes = asyncHandler(async (req, res) => {
   const recipes = await Recipe.find();
   res.status(200).json({ recipes });
@@ -12,16 +11,14 @@ const getRecipes = asyncHandler(async (req, res) => {
 
 //@description create a recipe
 //@route POST /api/recipes
-//@access public
 const createRecipe = asyncHandler(async (req, res) => {
-  console.log("The request body is:", req.body);
+  // console.log("The request body is:", req.body);
   const recipe = await Recipe.create(req.body);
   res.status(201).json(recipe);
 });
 
 //@description get a recipe
 //@route GET /api/recipes/:id
-//@access public
 const getRecipe = asyncHandler(async (req, res) => {
   const recipe = await Recipe.findById(req.params.id);
   if (!recipe) {
@@ -33,7 +30,6 @@ const getRecipe = asyncHandler(async (req, res) => {
 
 //@description update a recipe
 //@route PUT /api/recipes/:id
-//@access public
 const updateRecipe = asyncHandler(async (req, res) => {
   const recipe = await Recipe.findById(req.params.id);
   if (!recipe) {
@@ -51,7 +47,6 @@ const updateRecipe = asyncHandler(async (req, res) => {
 
 //@description delete a recipe
 //@route DELETE /api/recipes/:id
-//@access public
 const deleteRecipe = asyncHandler(async (req, res) => {
   const recipe = await Recipe.findById(req.params.id);
   if (!recipe) {

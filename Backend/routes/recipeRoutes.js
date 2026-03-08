@@ -15,6 +15,8 @@ const {
   deleteRecipe,
 } = require("../controllers/recipeController");
 
+//To review
+//To create swagger schemas
 /**
  * @swagger
  * /api/recipes:
@@ -93,6 +95,8 @@ const {
 
 router.route("/").get(getRecipes).post(createRecipe);
 
+//To review
+//To create swagger schemas
 /**
  * @swagger
  * /api/recipes/{id}:

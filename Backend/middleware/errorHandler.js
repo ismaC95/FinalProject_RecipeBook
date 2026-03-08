@@ -9,7 +9,6 @@ const errorHandler = (err, req, res, next) => {
   }
 
   //MONGOOSE VALIDATION ERROR
-
   if (err.name === "ValidationError") {
     statusCode = constants.VALIDATION_ERROR;
 
@@ -24,9 +23,7 @@ const errorHandler = (err, req, res, next) => {
     });
   }
 
-  /**
-   * MONGOOSE CAST ERROR (invalid ObjectId)
-   */
+  //MONGOOSE CAST ERROR (invalid ObjectId)
   if (err.name === "CastError") {
     statusCode = constants.VALIDATION_ERROR;
 
@@ -39,9 +36,7 @@ const errorHandler = (err, req, res, next) => {
     });
   }
 
-  /**
-   * DUPLICATE KEY ERROR (unique index violation)
-   */
+  //DUPLICATE KEY ERROR (unique index violation)
   if (err.code === 11000) {
     statusCode = constants.VALIDATION_ERROR;
 
