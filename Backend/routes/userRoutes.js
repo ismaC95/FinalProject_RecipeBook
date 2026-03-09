@@ -12,6 +12,7 @@ const {
   currentUser,
 } = require("../controllers/userController");
 const router = express.Router();
+const validateToken = require("../middleware/validateTokenHandler");
 
 //Register user
 /**
@@ -85,19 +86,18 @@ router.post("/login", loginUser);
  * @swagger
  * /api/users/current:
  *   get:
- *     summary: Get current logged-in user information
+ *     summary: Get the currently authenticated user
+ *     description: Returns the information of the logged-in user based on the JWT token.
  *     tags: [Users]
+ *     security:
+ *       - bearerAuth: []
  *     responses:
  *       200:
- *         description: Current user information retrieved
- *         content:
- *           application/json:
- *             schema:
- *               type: object
+ *         description: Successfully retrieved current user
  *       401:
- *         description: Unauthorized
+ *         description: Unauthorized – token missing or invalid
  */
-router.get("/current", currentUser);
+router.get("/current", validateToken, currentUser);
 
 //Update user
 

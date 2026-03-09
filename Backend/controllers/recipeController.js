@@ -11,6 +11,7 @@ const getRecipes = asyncHandler(async (req, res) => {
 
 //@description create a recipe
 //@route POST /api/recipes
+//@access private
 const createRecipe = asyncHandler(async (req, res) => {
   // console.log("The request body is:", req.body);
   const recipe = await Recipe.create(req.body);
@@ -19,6 +20,7 @@ const createRecipe = asyncHandler(async (req, res) => {
 
 //@description get a recipe
 //@route GET /api/recipes/:id
+//@access private
 const getRecipe = asyncHandler(async (req, res) => {
   const recipe = await Recipe.findById(req.params.id);
   if (!recipe) {
@@ -30,6 +32,7 @@ const getRecipe = asyncHandler(async (req, res) => {
 
 //@description update a recipe
 //@route PUT /api/recipes/:id
+//@access private
 const updateRecipe = asyncHandler(async (req, res) => {
   const recipe = await Recipe.findById(req.params.id);
   if (!recipe) {

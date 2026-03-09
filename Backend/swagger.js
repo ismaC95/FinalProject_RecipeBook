@@ -10,6 +10,16 @@ const options = {
       version: "1.0.0",
       description: "An API to share your cooking recipes",
     },
+    components: {
+      securitySchemes: {
+        bearerAuth: {
+          type: "http",
+          scheme: "bearer",
+          bearerFormat: "JWT",
+          description: "Enter JWT token in the format: Bearer <token>",
+        },
+      },
+    },
   },
   //come back to this once I have the routes
   apis: ["./routes/*.js"], // Path to your API routes
