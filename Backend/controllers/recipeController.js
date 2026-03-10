@@ -9,12 +9,30 @@ const getRecipes = asyncHandler(async (req, res) => {
   res.status(200).json({ recipes });
 });
 
+//@description get all recipes
+//@route GET /api/my-recipes
+const getUserRecipes = asyncHandler(async (req, res) => {
+  const recipes = await Recipe.find({ owner: req.user.id });
+  res.status(200).json({ recipes });
+});
+
 //@description create a recipe
 //@route POST /api/recipes
 //@access private
 const createRecipe = asyncHandler(async (req, res) => {
-  // console.log("The request body is:", req.body);
-  const recipe = await Recipe.create(req.body);
+  const { title, instructions, ingredients, prepTime, cookTime, difficulty } =
+    req.body;
+  if (
+    !title ||
+    !instructions ||
+    !ingredients ||
+    !prepTime ||
+    !cookTime ||
+    !difficulty
+  ) {
+    res.status(400).json("Missing required information");
+  }
+  const recipe = await Recipe.create({ ...req.body, owner: req.user.id });
   res.status(201).json(recipe);
 });
 
@@ -40,6 +58,11 @@ const updateRecipe = asyncHandler(async (req, res) => {
     throw new Error("Recipe not found");
   }
 
+  if (recipe.owner.toString() !== req.user.id) {
+    res.status(403);
+    throw new Error("No permission to update other user's recipe");
+  }
+
   const updatedRecipe = await Recipe.findByIdAndUpdate(
     req.params.id,
     req.body,
@@ -56,12 +79,18 @@ const deleteRecipe = asyncHandler(async (req, res) => {
     res.status(constants.NOT_FOUND);
     throw new Error("Recipe not found");
   }
-  await recipe.deleteOne();
-  res.status(200).json({ recipe });
+  if (recipe.owner.toString() !== req.user.id) {
+    res.status(403);
+    throw new Error("No permission to delete other user's recipe");
+  }
+
+  await recipe.deleteOne({ _id: req.params.id });
+  res.status(204).json({ recipe });
 });
 
 module.exports = {
   getRecipes,
+  getUserRecipes,
   createRecipe,
   getRecipe,
   updateRecipe,

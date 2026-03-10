@@ -53,11 +53,11 @@ const recipeSchema = new mongoose.Schema(
       type: String,
     },
 
-    // owner: {
-    //   type: mongoose.Schema.Types.ObjectId,
-    //   ref: "User",
-    //   required: true,
-    // },
+    owner: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
 
     // category: {
     //   type: mongoose.Schema.Types.ObjectId,

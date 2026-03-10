@@ -9,11 +9,13 @@ const express = require("express");
 const router = express.Router();
 const {
   getRecipes,
+  getUserRecipes,
   createRecipe,
   getRecipe,
   updateRecipe,
   deleteRecipe,
 } = require("../controllers/recipeController");
+const validateToken = require("../middleware/validateTokenHandler");
 
 //To review
 //To create swagger schemas
@@ -29,6 +31,8 @@ const {
  *   post:
  *     summary: Create a new recipe
  *     tags: [Recipes]
+ *     security:
+ *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -93,7 +97,25 @@ const {
  *         description: Server error
  */
 
-router.route("/").get(getRecipes).post(createRecipe);
+router.route("/").get(getRecipes).post(validateToken, createRecipe);
+
+/**
+ * @swagger
+ * /api/recipes/my-recipes:
+ *    get:
+ *     summary: Get user's recipes
+ *     tags: [Recipes]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: List of recipes
+ *       401:
+ *         description: Unauthorized – token missing or invalid
+ *       404:
+ *         description: No recipes owned by the user
+ */
+router.route("/my-recipes").get(validateToken, getUserRecipes);
 
 //To review
 //To create swagger schemas
@@ -117,6 +139,8 @@ router.route("/").get(getRecipes).post(createRecipe);
  *   put:
  *     summary: Update an existing recipe
  *     tags: [Recipes]
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -192,6 +216,8 @@ router.route("/").get(getRecipes).post(createRecipe);
  *   delete:
  *     summary: Delete recipe
  *     tags: [Recipes]
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -201,8 +227,14 @@ router.route("/").get(getRecipes).post(createRecipe);
  *     responses:
  *       204:
  *         description: Recipe deleted
+ *       404:
+ *         description: Recipe not found
  */
 
-router.route("/:id").get(getRecipe).put(updateRecipe).delete(deleteRecipe);
+router
+  .route("/:id")
+  .get(getRecipe)
+  .put(validateToken, updateRecipe)
+  .delete(validateToken, deleteRecipe);
 
 module.exports = router;
