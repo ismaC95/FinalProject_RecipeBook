@@ -5,7 +5,7 @@ const { constants } = require("../constants");
 //@description get all recipes
 //@route GET /api/recipes
 const getRecipes = asyncHandler(async (req, res) => {
-  const recipes = await Recipe.find();
+  const recipes = await Recipe.find({ isPublic: true });
   res.status(200).json({ recipes });
 });
 
