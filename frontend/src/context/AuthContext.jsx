@@ -19,9 +19,14 @@ export function AuthProvider({children}){
         }
     }, []);
 
-    const login = () => {
+    const login = async (token) => {
         localStorage.setItem('token', token);
-        setUser(userData);
+        try{
+            const {data} = await getCurrentUser();
+            setUser(data);            
+        } catch {
+            localStorage.removeIten('token');
+        }
     }
 
     const logout = () => {

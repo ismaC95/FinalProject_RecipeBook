@@ -3,7 +3,8 @@ import { Box, Grid } from '@mui/material';
 import { Routes, Route } from 'react-router-dom';
 
 //Pages
-import Home from './pages/Home'
+import Home from './pages/Home';
+import Login from './pages/Login';
 
 //Components
 import LoggedInNavBar from './components/LoggedInNavBar';
@@ -25,6 +26,7 @@ function App() {
               <Box mt={10}>
                 <Routes>
                   <Route path="/" element={<Home />} />
+                  <Route path="/login" element={<Login />} />
                 </Routes>
               </Box>
             </Grid>
