@@ -30,7 +30,8 @@ const loggedInSettings = [
   {label:'Logout', path: '/'},
 ];
 const loggedOutSettings = [
-  {label:'Login', path:'/login'}
+  {label:'Login', path:'/login'},
+  {label:'Create Account', path:'/register'}
 ];
 
 function LoggedInNavBar() {
@@ -174,7 +175,7 @@ function LoggedInNavBar() {
                 <Tooltip title="Open settings">
                   <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                     {user ?
-                    <Avatar sx={{ bgcolor: '#F5C842', color: '#1E6B52', fontWeight: 700 }}>
+                    <Avatar sx={{ bgcolor: '#F5F3EE', color: '#1E6B52', fontWeight: 700 }}>
                       {user ? user.username.charAt(0).toUpperCase() : '?'}
                     </Avatar>
                     :

@@ -12,13 +12,32 @@ const registerUser = asyncHandler(async (req, res) => {
     throw new Error("All fields are mandatory");
   }
 
+  //Data validation
+  const emailRegex = /^[\w.-]+@([\w-]+\.)+[\w-]{2,4}$/;
+  //password needs at least 8 characters, 1 lowercase, 1 uppercase, 1 number and can contain special characters
+  const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
+
+  if (!emailRegex.test(email)) {
+    console.log("Email failed regex:", email);
+    res.status(400);
+    throw new Error("Invalid email format");
+  }
+
+  if (!passwordRegex.test(password)) {
+    console.log("Password failed regex:", password);
+    res.status(400);
+    throw new Error(
+      "Password must be at least 8 characters long and include uppercase, lowercase, and a number",
+    );
+  }
+
   //User credentials unique validation
   const emailAvailable = await User.findOne({ email });
-  const usernameAvailable = await User.findOne({ username });
+  // const usernameAvailable = await User.findOne({ username });
 
-  if (emailAvailable || usernameAvailable) {
+  if (emailAvailable) {
     res.status(400);
-    throw new Error("Username or email already in use");
+    throw new Error("Email already in use");
   }
 
   //Hash password
@@ -31,7 +50,6 @@ const registerUser = asyncHandler(async (req, res) => {
   });
 
   //user creation
-  console.log(`User created ${user}`);
   if (user) {
     res
       .status(201)
