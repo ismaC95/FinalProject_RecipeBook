@@ -13,6 +13,11 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
+//URL to load images from recipes:
+export const BASE_URL = "http://localhost:5001";
+
+//-------------------- Endpoints -----------------------
+
 //Recipes
 export const getRecipes = () => api.get("/api/recipes");
 export const getMyRecipes = () => api.get("/api/my-recipes");
