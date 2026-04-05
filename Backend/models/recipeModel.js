@@ -51,6 +51,16 @@ const recipeSchema = new mongoose.Schema(
 
     imageUrl: {
       type: String,
+      default: () => {
+        const images = [
+          "/images/recipe1.jpg",
+          "/images/recipe2.jpg",
+          "/images/recipe3.jpg",
+          "/images/recipe4.jpg",
+          "/images/recipe5.jpg",
+        ];
+        return images[Math.floor(Math.random() * images.length)];
+      },
     },
 
     owner: {

@@ -85,9 +85,6 @@ const validateToken = require("../middleware/validateTokenHandler");
  *               isPublic:
  *                 type: boolean
  *                 example: true
- *               imageUrl:
- *                 type: string
- *                 example: https://example.com/image.jpg
  *     responses:
  *       201:
  *         description: Recipe created successfully
