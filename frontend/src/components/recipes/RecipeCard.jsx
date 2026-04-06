@@ -16,6 +16,8 @@ import {
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import WhatshotIcon from "@mui/icons-material/Whatshot";
 import { BASE_URL } from "../../services/api";
+import { getRecipe } from "../../services/api";
+import { useNavigate } from "react-router-dom";
 
 //Colors for the difficulty badges and text
 const DIFFICULTY_COLORS = {
@@ -25,6 +27,8 @@ const DIFFICULTY_COLORS = {
 };
 
 function RecipeCard({ recipe }) {
+  const navigate = useNavigate();
+
   return (
     <Card
       sx={{
@@ -43,6 +47,7 @@ function RecipeCard({ recipe }) {
           boxShadow: "0 8px 24px rgba(0,0,0,0.08)",
         },
       }}
+      onClick={() => navigate(`/recipe/${recipe._id}`)}
     >
       {/* Image */}
       <CardMedia
