@@ -1,29 +1,21 @@
-//Component to display recipes in squares, flex wrap. The information to add in each recipe are:
+//Component to display recipes the information to add in each recipe is:
 //- Title
 //- PrepTime
 //- CookTime
 //- Difficulty
 //- Image
 
-import { useState, useEffect } from "react";
-import { useSortedRecipes } from "../hooks/useSortedRecipes";
-import { getRecipes } from "../services/api";
 import {
   Box,
   Card,
   CardContent,
   CardMedia,
   Typography,
-  Select,
-  MenuItem,
-  FormControl,
-  InputLabel,
   Chip,
-  Skeleton,
 } from "@mui/material";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import WhatshotIcon from "@mui/icons-material/Whatshot";
-import { BASE_URL } from "../services/api";
+import { BASE_URL } from "../../services/api";
 
 //Colors for the difficulty badges and text
 const DIFFICULTY_COLORS = {
@@ -112,85 +104,4 @@ function RecipeCard({ recipe }) {
   );
 }
 
-//The skeleton will show only when the content is loading
-function RecipeCardSkeleton() {
-  return (
-    <Box
-      sx={{
-        width: {
-          xs: "100%",
-          sm: "49%",
-          md: "32%",
-        },
-      }}
-    >
-      <Skeleton variant="rounded" height={180} />
-      <Box pt={1}>
-        <Skeleton width="30%" height={24} />
-        <Skeleton width="80%" height={24} />
-        <Skeleton width="60%" height={20} />
-      </Box>
-    </Box>
-  );
-}
-
-function RecipeDisplay() {
-  const [recipes, setRecipes] = useState([]);
-  const [sortBy, setSortBy] = useState("newest");
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
-
-  const sortedRecipes = useSortedRecipes(recipes, sortBy);
-
-  useEffect(() => {
-    const fetchRecipes = async () => {
-      try {
-        const { data } = await getRecipes();
-        setRecipes(data.recipes);
-      } catch (err) {
-        setError("Could not load recipes. Please try again.");
-        console.error(err);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchRecipes();
-  }, []);
-
-  return (
-    <Box sx={{ py: { xs: 4, md: 6 } }}>
-      {/* Error */}
-      {error && (
-        <Typography color="error" textAlign="center" mt={4}>
-          {error}
-        </Typography>
-      )}
-
-      {/* Recipe grid */}
-      <Box display="flex" justifyContent={"center"} flexWrap="wrap" gap={2}>
-        {loading
-          ? Array.from({ length: 6 }).map((_, i) => (
-              <RecipeCardSkeleton key={i} />
-            ))
-          : sortedRecipes.map((recipe) => (
-              <RecipeCard key={recipe._id} recipe={recipe} />
-            ))}
-      </Box>
-
-      {/* Empty state */}
-      {!loading && !error && recipes.length === 0 && (
-        <Box textAlign="center" mt={8}>
-          <Typography fontSize="3rem">🍳</Typography>
-          <Typography fontWeight={700} mt={1}>
-            No recipes yet
-          </Typography>
-          <Typography color="text.secondary" mt={0.5}>
-            Be the first to add one!
-          </Typography>
-        </Box>
-      )}
-    </Box>
-  );
-}
-
-export default RecipeDisplay;
+export default RecipeCard;

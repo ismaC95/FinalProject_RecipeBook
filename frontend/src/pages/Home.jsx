@@ -6,23 +6,27 @@ import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import { Box, Typography, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
-import RecipeDisplay from "../components/RecipesDisplay";
+import RecipeSummary from "../components/recipes/RecipeSummary";
 
 function Home() {
   const [recipes, setRecipes] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchRecipes = async () => {
+    const fetch = async () => {
       try {
         const { data } = await getRecipes();
         setRecipes(data.recipes);
       } catch (err) {
-        console.error(err);
+        setError("Could not load recipes.");
+      } finally {
+        setLoading(false);
       }
     };
-    fetchRecipes();
+    fetch();
   }, []);
 
   return (
@@ -203,10 +207,7 @@ function Home() {
           </Box>
         </Box>
       </Box>
-      <Typography variant="h4" fontWeight={700} sx={{ mt: { sm: 5, md: 8 } }}>
-        Latest Recipes
-      </Typography>
-      <RecipeDisplay />
+      <RecipeSummary recipes={recipes} loading={loading} error={error} />
     </>
   );
 }
