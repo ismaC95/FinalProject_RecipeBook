@@ -7,6 +7,7 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Discover from "./pages/Discover";
+import Recipe from "./pages/Recipe";
 
 //Components
 import LoggedInNavBar from "./components/LoggedInNavBar";
@@ -26,12 +27,13 @@ function App() {
             offset={{ md: 2 }}
             px={{ xs: 2, md: 0 }}
           >
-            <Box mt={{ xs: 2, md: 10 }}>
+            <Box mt={{ xs: 2, md: 6 }}>
               <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
                 <Route path="/discover" element={<Discover />} />
+                <Route path="/recipe/:id" element={<Recipe />} />
               </Routes>
             </Box>
           </Grid>

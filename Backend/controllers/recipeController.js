@@ -40,7 +40,10 @@ const createRecipe = asyncHandler(async (req, res) => {
 //@route GET /api/recipes/:id
 //@access private
 const getRecipe = asyncHandler(async (req, res) => {
-  const recipe = await Recipe.findById(req.params.id);
+  const recipe = await Recipe.findById(req.params.id).populate(
+    "owner",
+    "username",
+  );
   if (!recipe) {
     res.status(constants.NOT_FOUND);
     throw new Error("Recipe not found");
