@@ -5,6 +5,7 @@ import { getRecipes } from "../services/api";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import { Box, Typography, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 import RecipeSummary from "../components/recipes/RecipeSummary";
 
@@ -12,6 +13,7 @@ function Home() {
   const [recipes, setRecipes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const { user } = useAuth();
 
   const navigate = useNavigate();
 
@@ -84,7 +86,9 @@ function Home() {
           <Box display="flex" gap={2} mt={4} flexWrap="wrap">
             <Button
               variant="contained"
-              onClick={() => navigate("/register")}
+              onClick={() =>
+                user ? navigate("/create-recipe") : navigate("/register")
+              }
               sx={{
                 bgcolor: "#1A1A1A",
                 color: "white",

@@ -2,7 +2,7 @@
 //Page changes based on user being the owner adding Edit and Delete recipe buttons
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { getRecipe } from "../services/api";
+import { getRecipe, deleteRecipe } from "../services/api";
 import { useAuth } from "../context/AuthContext";
 import { BASE_URL } from "../services/api";
 import {
@@ -13,6 +13,12 @@ import {
   Grid,
   Skeleton,
   IconButton,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions,
+  Button,
 } from "@mui/material";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import WhatshotIcon from "@mui/icons-material/Whatshot";
@@ -46,6 +52,8 @@ function RecipePage() {
   const [recipe, setRecipe] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
     const fetchRecipe = async () => {
@@ -62,6 +70,20 @@ function RecipePage() {
     };
     fetchRecipe();
   }, [id]);
+
+  //delete recipe
+  const handleDelete = async () => {
+    setDeleting(true);
+    try {
+      await deleteRecipe(id);
+      navigate("/my-recipes");
+    } catch (err) {
+      setDeleteDialogOpen(false);
+      setError("Could not delete recipe.");
+    } finally {
+      setDeleting(false);
+    }
+  };
 
   if (loading)
     return (
@@ -209,7 +231,7 @@ function RecipePage() {
           <Box display="flex" gap={2}>
             <Chip
               label="Edit recipe"
-              onClick={() => navigate(`/recipes/${id}/edit`)}
+              onClick={() => navigate(`/recipe/${id}/edit`)}
               sx={{
                 bgcolor: "#1E6B52",
                 color: "white",
@@ -222,6 +244,7 @@ function RecipePage() {
             />
             <Chip
               label="Delete recipe"
+              onClick={() => setDeleteDialogOpen(true)}
               sx={{
                 bgcolor: "#FCEBEB",
                 color: "#A32D2D",
@@ -281,7 +304,7 @@ function RecipePage() {
           <Typography variant="h5" fontWeight={700} mb={2}>
             Instructions
           </Typography>
-          {/* <Box display="flex" flexDirection="column" gap={3}>
+          <Box display="flex" flexDirection="column" gap={3}>
             {recipe.instructions
               .split("\n")
               .filter((step) => step.trim())
@@ -321,8 +344,8 @@ function RecipePage() {
                   </Typography>
                 </Box>
               ))}
-          </Box> */}
-          <Typography
+          </Box>
+          {/* <Typography
             variant="body1"
             color="text.secondary"
             sx={{
@@ -331,9 +354,57 @@ function RecipePage() {
             }}
           >
             {recipe.instructions}
-          </Typography>
+          </Typography> */}
         </Grid>
       </Grid>
+      <Dialog
+        open={deleteDialogOpen}
+        onClose={() => setDeleteDialogOpen(false)}
+        slotProps={{
+          paper: {
+            sx: { borderRadius: 3, p: 1 },
+          },
+        }}
+      >
+        <DialogTitle sx={{ fontWeight: 700 }}>Delete recipe?</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Are you sure you want to delete <strong>{recipe?.title}</strong>?
+            This action is permanent and cannot be undone. Your recipe will be
+            gone forever.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions sx={{ px: 3, pb: 2, gap: 1 }}>
+          <Button
+            onClick={() => setDeleteDialogOpen(false)}
+            variant="outlined"
+            sx={{
+              borderColor: "#1A1A1A",
+              color: "#1A1A1A",
+              borderRadius: 99,
+              textTransform: "none",
+              fontWeight: 700,
+            }}
+          >
+            Keep recipe
+          </Button>
+          <Button
+            onClick={handleDelete}
+            variant="contained"
+            disabled={deleting}
+            sx={{
+              bgcolor: "#A32D2D",
+              color: "white",
+              borderRadius: 99,
+              textTransform: "none",
+              fontWeight: 700,
+              "&:hover": { bgcolor: "#7A1F1F" },
+            }}
+          >
+            {deleting ? "Deleting..." : "Delete"}
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Box>
   );
 }

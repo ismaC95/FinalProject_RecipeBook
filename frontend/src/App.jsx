@@ -7,10 +7,13 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Discover from "./pages/Discover";
-import Recipe from "./pages/Recipe";
+import CreateRecipe from "./pages/CreateRecipe";
+import RecipePage from "./pages/RecipePage";
+import UpdateRecipe from "./pages/UpdateRecipe";
 
 //Components
 import LoggedInNavBar from "./components/LoggedInNavBar";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
   return (
@@ -33,7 +36,23 @@ function App() {
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
                 <Route path="/discover" element={<Discover />} />
-                <Route path="/recipe/:id" element={<Recipe />} />
+                <Route path="/recipe/:id" element={<RecipePage />} />
+                <Route
+                  path="/create-recipe"
+                  element={
+                    <ProtectedRoute>
+                      <CreateRecipe />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/recipe/:id/edit"
+                  element={
+                    <ProtectedRoute>
+                      <UpdateRecipe />
+                    </ProtectedRoute>
+                  }
+                />
               </Routes>
             </Box>
           </Grid>
