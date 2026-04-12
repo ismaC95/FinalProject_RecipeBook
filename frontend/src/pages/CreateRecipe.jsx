@@ -108,7 +108,7 @@ function CreateRecipe() {
   };
 
   return (
-    <Box maxWidth="100%" mx="auto" pb={8}>
+    <Box maxWidth="100%" mx="auto">
       <Typography variant="h4" fontWeight={800} mb={1}>
         Create a recipe
       </Typography>

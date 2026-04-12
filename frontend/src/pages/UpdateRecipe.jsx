@@ -20,6 +20,7 @@ import {
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import DeleteIcon from "@mui/icons-material/Delete";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 const UNITS = [
   "g",
@@ -63,7 +64,7 @@ function UpdateRecipe() {
         const recipe = data.recipe;
 
         // check the user is actually the owner before letting them edit
-        if (user?.id !== recipe.owner?._id?.toString()) {
+        if (user?._id !== recipe.owner?._id?.toString()) {
           navigate(`/recipes/${id}`);
           return;
         }
@@ -175,7 +176,11 @@ function UpdateRecipe() {
     );
 
   return (
-    <Box maxWidth="100%" mx="auto" pb={8}>
+    <Box maxWidth="100%" mx="auto">
+      {/* Back button */}
+      <IconButton onClick={() => navigate(-1)} sx={{ mb: 2, color: "#1E6B52" }}>
+        <ArrowBackIcon />
+      </IconButton>
       <Typography variant="h4" fontWeight={800} mb={1}>
         Edit recipe
       </Typography>

@@ -97,7 +97,7 @@ function LoggedInNavBar() {
                   textDecoration: "none",
                 }}
               >
-                RecipeBook
+                Umamade
               </Typography>
 
               {/* MOBILE: Hamburger menu + dropdown */}
@@ -159,7 +159,7 @@ function LoggedInNavBar() {
                   textDecoration: "none",
                 }}
               >
-                RecipeBook
+                Umamade
               </Typography>
 
               {/* DESKTOP: Nav page buttons */}

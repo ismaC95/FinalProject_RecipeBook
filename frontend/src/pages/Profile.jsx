@@ -96,7 +96,7 @@ function Profile() {
   };
 
   return (
-    <Box maxWidth="100%" mx="auto" pb={8}>
+    <Box maxWidth="100%" mx="auto">
       {/* Header */}
       <Box display="flex" alignItems="center" gap={3} mb={4}>
         <Box sx={{ position: "relative" }}>

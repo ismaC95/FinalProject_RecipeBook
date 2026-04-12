@@ -16,6 +16,7 @@ import LoggedInNavBar from "./components/LoggedInNavBar";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Profile from "./pages/Profile";
 import MyRecipes from "./pages/MyRecipes";
+import Footer from "./components/Footer";
 
 function App() {
   return (
@@ -32,7 +33,7 @@ function App() {
             offset={{ md: 2 }}
             px={{ xs: 2, md: 0 }}
           >
-            <Box mt={{ xs: 2, md: 6 }}>
+            <Box mt={{ xs: 2, md: 6 }} mb={8}>
               <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/login" element={<Login />} />
@@ -48,7 +49,7 @@ function App() {
                   }
                 />
                 <Route
-                  path="/recipe/:id/edit"
+                  path="/recipes/:id/edit"
                   element={
                     <ProtectedRoute>
                       <UpdateRecipe />
@@ -75,6 +76,7 @@ function App() {
             </Box>
           </Grid>
         </Grid>
+        <Footer />
       </Box>
     </Box>
   );

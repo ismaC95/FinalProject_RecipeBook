@@ -107,17 +107,17 @@ function RecipePage() {
       </Box>
     );
 
-  const isOwner = user?.id === recipe.owner?._id?.toString();
+  const isOwner = user?._id === recipe.owner?._id?.toString();
   const totalTime = recipe.prepTime + recipe.cookTime;
 
   return (
-    <Box maxWidth="100%" mx="auto" pb={8}>
+    <Box maxWidth="100%" mx="auto">
       {/* Back button */}
       <IconButton onClick={() => navigate(-1)} sx={{ mb: 2, color: "#1E6B52" }}>
         <ArrowBackIcon />
       </IconButton>
 
-      {/* Hero image */}
+      {/* Image */}
       <Box
         component="img"
         src={`${BASE_URL}${recipe.imageUrl}`}
@@ -229,7 +229,7 @@ function RecipePage() {
           <Box display="flex" gap={2}>
             <Chip
               label="Edit recipe"
-              onClick={() => navigate(`/recipe/${id}/edit`)}
+              onClick={() => navigate(`/recipes/${id}/edit`)}
               sx={{
                 bgcolor: "#1E6B52",
                 color: "white",

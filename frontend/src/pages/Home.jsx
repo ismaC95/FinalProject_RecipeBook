@@ -46,7 +46,7 @@ function Home() {
         }}
       >
         {/* Welcome text */}
-        <Box sx={{ flex: 1 }}>
+        <Box mb={8} sx={{ flex: 1 }}>
           <Typography
             variant="h3"
             fontWeight={800}
