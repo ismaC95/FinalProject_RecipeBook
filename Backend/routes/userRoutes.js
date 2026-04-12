@@ -10,6 +10,7 @@ const {
   registerUser,
   loginUser,
   currentUser,
+  updateUser,
 } = require("../controllers/userController");
 const router = express.Router();
 const validateToken = require("../middleware/validateTokenHandler");
@@ -100,6 +101,7 @@ router.post("/login", loginUser);
 router.get("/current", validateToken, currentUser);
 
 //Update user
+router.put("/profile", validateToken, updateUser);
 
 //Delete user
 

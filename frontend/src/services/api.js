@@ -30,3 +30,4 @@ export const deleteRecipe = (id) => api.delete(`/api/recipes/${id}`);
 export const register = (data) => api.post("/api/users/register", data);
 export const login = (data) => api.post("/api/users/login", data);
 export const getCurrentUser = () => api.get("/api/users/current");
+export const updateUser = (data) => api.put("api/users/profile", data);

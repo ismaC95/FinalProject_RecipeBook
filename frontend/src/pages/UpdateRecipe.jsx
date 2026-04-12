@@ -417,7 +417,7 @@ function UpdateRecipe() {
       {/* ── Submit ── */}
       <Box display="flex" gap={2} justifyContent="flex-end">
         <Button
-          onClick={() => navigate(`/recipes/${id}`)}
+          onClick={() => navigate(`/recipe/${id}`)}
           variant="outlined"
           sx={{
             borderColor: "#1A1A1A",

@@ -59,8 +59,6 @@ function RecipePage() {
     const fetchRecipe = async () => {
       try {
         const { data } = await getRecipe(id);
-        console.log("recipe data:", data.recipe); // add this
-        console.log("owner:", data.recipe.owner); // add this
         setRecipe(data.recipe);
       } catch (err) {
         setError("Recipe not found.");

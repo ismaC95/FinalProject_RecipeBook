@@ -14,6 +14,7 @@ import UpdateRecipe from "./pages/UpdateRecipe";
 //Components
 import LoggedInNavBar from "./components/LoggedInNavBar";
 import ProtectedRoute from "./components/ProtectedRoute";
+import Profile from "./pages/Profile";
 
 function App() {
   return (
@@ -50,6 +51,14 @@ function App() {
                   element={
                     <ProtectedRoute>
                       <UpdateRecipe />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/profile"
+                  element={
+                    <ProtectedRoute>
+                      <Profile />
                     </ProtectedRoute>
                   }
                 />

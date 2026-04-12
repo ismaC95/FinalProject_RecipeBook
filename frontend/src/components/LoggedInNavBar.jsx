@@ -191,6 +191,7 @@ function LoggedInNavBar() {
                         sx={{
                           bgcolor: "#F5F3EE",
                           color: "#1E6B52",
+                          fontSize: "1.5rem",
                           fontWeight: 700,
                         }}
                       >
