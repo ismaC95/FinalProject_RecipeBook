@@ -19,8 +19,9 @@ export const BASE_URL = "http://localhost:5001";
 //-------------------- Endpoints -----------------------
 
 //Recipes
-export const getRecipes = () => api.get("/api/recipes");
-export const getMyRecipes = () => api.get("/api/my-recipes");
+export const getRecipes = (params = {}) => api.get("/api/recipes", { params });
+export const getUserRecipes = (params = {}) =>
+  api.get("/api/recipes/my-recipes", { params });
 export const getRecipe = (id) => api.get(`/api/recipes/${id}`);
 export const createRecipe = (data) => api.post("/api/recipes", data);
 export const updateRecipe = (id, data) => api.put(`/api/recipes/${id}`, data);

@@ -1,10 +1,9 @@
-//Page with all recipes where user can search and filter them
 import RecipeGrid from "../components/recipes/RecipeGrid";
-import { getRecipes } from "../services/api";
+import { getUserRecipes } from "../services/api";
 import { useState, useEffect } from "react";
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 
-function Discover() {
+function MyRecipes() {
   const [recipes, setRecipes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -14,7 +13,6 @@ function Discover() {
     total: 0,
   });
 
-  // search and filter state
   const [search, setSearch] = useState("");
   const [difficulty, setDifficulty] = useState("");
   const [maxTime, setMaxTime] = useState("");
@@ -25,7 +23,7 @@ function Discover() {
     const fetch = async () => {
       setLoading(true);
       try {
-        const { data } = await getRecipes({
+        const { data } = await getUserRecipes({
           search: search || undefined,
           difficulty: difficulty || undefined,
           maxTime: maxTime || undefined,
@@ -36,7 +34,7 @@ function Discover() {
         setRecipes(data.recipes);
         setPagination(data.pagination);
       } catch (err) {
-        setError("Could not load recipes.");
+        setError("Could not load your recipes.");
       } finally {
         setLoading(false);
       }
@@ -44,7 +42,6 @@ function Discover() {
     fetch();
   }, [search, difficulty, maxTime, maxIngredients, page]);
 
-  // reset to page 1 when filters change
   const handleSearchChange = (value) => {
     setSearch(value);
     setPage(1);
@@ -71,6 +68,12 @@ function Discover() {
 
   return (
     <Box width="100%">
+      <Typography variant="h4" fontWeight={800} mb={1}>
+        My recipes
+      </Typography>
+      <Typography variant="body1" color="text.secondary" mb={4}>
+        All the recipes you've created
+      </Typography>
       <RecipeGrid
         recipes={recipes}
         loading={loading}
@@ -87,9 +90,15 @@ function Discover() {
         maxIngredients={maxIngredients}
         onMaxIngredientsChange={handleMaxIngredientsChange}
         onClearFilters={handleClearFilters}
+        emptyMessage="You haven't created any recipes yet"
+        emptyIcon="👨‍🍳"
+        emptyAction={{
+          label: "Create your first recipe",
+          path: "/create-recipe",
+        }}
       />
     </Box>
   );
 }
 
-export default Discover;
+export default MyRecipes;

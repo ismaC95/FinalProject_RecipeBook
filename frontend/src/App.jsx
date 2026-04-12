@@ -15,6 +15,7 @@ import UpdateRecipe from "./pages/UpdateRecipe";
 import LoggedInNavBar from "./components/LoggedInNavBar";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Profile from "./pages/Profile";
+import MyRecipes from "./pages/MyRecipes";
 
 function App() {
   return (
@@ -59,6 +60,14 @@ function App() {
                   element={
                     <ProtectedRoute>
                       <Profile />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/my-recipes"
+                  element={
+                    <ProtectedRoute>
+                      <MyRecipes />
                     </ProtectedRoute>
                   }
                 />
